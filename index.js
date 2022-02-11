@@ -5,7 +5,7 @@ const { spawn, execSync } = require('child_process');
 const JIRA_REGEX = "\[[a-zA-Z0-9,\.\_\-]+-[0-9]+\]";
 
 try {
-    const rev_list = spawn('git', ['rev-list', 'HEAD', `^origin/${github.context.payload.pull_request.base.ref}`]);
+    const rev_list = spawn('git', ['rev-list', 'HEAD', `^origin/${github.context.payload.pull_request.base.ref.trim()}`]);
     
     rev_list.stdout.on('data', data => {
         const revs = new String(data).split('\n');
