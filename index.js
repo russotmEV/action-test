@@ -5,9 +5,10 @@ const { spawn, execSync } = require('child_process');
 const JIRA_REGEX = "\[[a-zA-Z0-9,\.\_\-]+-[0-9]+\]";
 
 try {
-    console.log(execSync('git config --get remote.origin.url').toString().trim());
     execSync('git fetch --all');
-    const rev_list = spawn('git', ['rev-list', 'HEAD', `^origin/${github.context.payload.pull_request.base.ref.trim()}`]);
+    const rev_list = spawn('git', ['rev-list',
+        `origin/${github.context.payload.pull_request.head.ref}`,
+        `^origin/${github.context.payload.pull_request.base.ref}`]);
     
     rev_list.stdout.on('data', data => {
         const revs = new String(data).split('\n');
@@ -19,7 +20,6 @@ try {
             
             const msg = execSync(`git log --format=%B -n 1 ${rev}`).toString().trim();
             const found = msg.match(JIRA_REGEX);
-            
 
             if (found) {
                 console.log(`[PASS] ${msg}`);
