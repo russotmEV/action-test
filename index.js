@@ -30,7 +30,7 @@ try {
         if (hasFailed) { core.setFailed(`Commits missing JIRA ticket number.`); }
     });
     rev_list.stderr.on('data', data => {
-        throw { message: data };
+        throw { message: data.toString() };
     });
     rev_list.on('error', error => {
         throw error;
