@@ -1,0 +1,5 @@
+name: 'JIRA Commit Check'
+description: 'Check each commit message for a JIRA ticket number.'
+runs:
+  using: 'node16'
+  main: 'index.js'
